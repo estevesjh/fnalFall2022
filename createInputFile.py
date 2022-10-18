@@ -12,7 +12,7 @@ import os
 from astropy.table import Table, join
 from astropy.io.fits import getdata
 
-def create_newVector(data,col='MI'):
+def create_newVector(data,col='MZ'):
     train = data['Train']
     xall = np.c_[data['xvec'],data['z_true']].T
     yall = (np.c_[data['smass'],data[col],data['QF']]).T
@@ -20,7 +20,7 @@ def create_newVector(data,col='MI'):
 
 path = '/data/des61.a/data/johnny/COSMOS/fnal2022/'
 fname = path+'desCosmosML_sample.fits'
-overwrite = True
+overwrite = False
 
 if not os.path.isfile(fname) or overwrite:
     names = ['./data/%s_indices_matched'%field for field in ['des','cosmos']]
@@ -91,7 +91,7 @@ print('Defining Quenching Galaxies')
 joined['QF'] = np.where(joined['sSFR']<=-10.2, 1, 0)
 
 print('Saving Vectors')
-mylist = create_newVector(joined,col='MI')
+mylist = create_newVector(joined,col='MZ')
 
 for vec,label in zip(mylist,['y_train','y_test','x_train','x_test']):
     np.save(path+'qf_'+label,vec)
