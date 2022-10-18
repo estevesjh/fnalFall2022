@@ -15,17 +15,19 @@ from astropy.io.fits import getdata
 def create_newVector(data,col='MI'):
     train = data['Train']
     xall = np.c_[data['xvec'],data['z_true']].T
-    yall = (np.c_[data['smass'],data[col]]).T
+    yall = (np.c_[data['smass'],data[col],data['QF']]).T
     return yall[:,train].T,yall[:,~train].T,xall[:,train].T,xall[:,~train].T
 
 path = '/data/des61.a/data/johnny/COSMOS/fnal2022/'
 fname = path+'desCosmosML_sample.fits'
+overwrite = True
 
-if not os.path.isfile(fname):
-    names = ['../data/%s_indices_matched'%field for field in ['des','cosmos']]
+if not os.path.isfile(fname) or overwrite:
+    names = ['./data/%s_indices_matched'%field for field in ['des','cosmos']]
     rowsDES    = np.load(names[0]+'_01arcsec.npy')
     rowsCOSMOS = np.load(names[1]+'_01arcsec.npy')
-
+    
+    print('Load DES and COSMOS sample')
     des_deep_field_infile = '/data/des61.a/data/johnny/COSMOS/y3_deep_fields.fits'
     des0 = Table(getdata(des_deep_field_infile))
 
@@ -34,17 +36,20 @@ if not os.path.isfile(fname):
 
     des   = des0[rowsDES]
     cosmo = cosmo0[rowsCOSMOS]
-
+    
+    des['sSFR'] = cosmo['SSFR_BEST']
     des['z_true'] = cosmo['PHOTOZ']
     des['smass']  = cosmo['MASS_BEST']
+    des['smass_err']  = (cosmo['MASS_MED_MAX68']-cosmo['MASS_MED_MIN68'])/2.
     des['GALAXY'] = cosmo['TYPE']
 
     for li in ['I','R','Z']:
         des['M%s'%li] = cosmo['M%s'%li]
-
+    
     des0    = 0
     cosmos0 = 0
-
+    
+    print('Start Match Procedure')
     mask = (des['z_true'] <= 10.)&(des['z_true']>=0.)
     mask &= (des['smass'] <= 13.)&(des['smass']>=0.)
 
@@ -78,12 +83,15 @@ if not os.path.isfile(fname):
     print('New sample size: %i'%len(joined))
     print('New Training size: %i'%np.count_nonzero(joined['Train']))
 
-    joined.write(fname)
+    joined.write(fname, overwrite=overwrite)
 else:
     joined = Table(getdata(fname))
+
+print('Defining Quenching Galaxies')
+joined['QF'] = np.where(joined['sSFR']<=-10.2, 1, 0)
 
 print('Saving Vectors')
 mylist = create_newVector(joined,col='MI')
 
 for vec,label in zip(mylist,['y_train','y_test','x_train','x_test']):
-    np.save(path+label,vec)
+    np.save(path+'qf_'+label,vec)
