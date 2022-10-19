@@ -1,8 +1,9 @@
-# Stellar Mass Estimator: Galpro v2.0
+# Fnal Fall 2022 
 ________________
-A comparision of two current stellar mass codes, BMA and Galpro. (ToDo: describe BMA and Galpro) <br>
+In this repo is my progress made during my stay at Fermilab. The topics that I worked on are listed bellow:  <br>
 
 <ul>
-<li> BMA: we use the COSMOS field first to validate the stellar masses. 
-<li> Galpro: to understand the ML code on a distinct sample, we use the SDSS+GALEX+WISE sample>
-</ul>
+<li> `smass`: RD of a machine learning (ML) stellar mass estimator based on the COSMOS (Hubble deep field).
+<li> `r200`: improvements of the copacabana $R_{200}$ estimator using stellar masses. 
+<li> `qmodel`: quenching model RD.
+</ul> 
