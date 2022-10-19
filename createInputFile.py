@@ -20,7 +20,7 @@ def create_newVector(data,col='MZ'):
 
 path = '/data/des61.a/data/johnny/COSMOS/fnal2022/'
 fname = path+'desCosmosML_sample.fits'
-overwrite = False
+overwrite = True
 
 if not os.path.isfile(fname) or overwrite:
     names = ['./data/%s_indices_matched'%field for field in ['des','cosmos']]
@@ -37,6 +37,7 @@ if not os.path.isfile(fname) or overwrite:
     des   = des0[rowsDES]
     cosmo = cosmo0[rowsCOSMOS]
     
+    des['SFR'] = cosmo['SFR_BEST']    
     des['sSFR'] = cosmo['SSFR_BEST']
     des['z_true'] = cosmo['PHOTOZ']
     des['smass']  = cosmo['MASS_BEST']
