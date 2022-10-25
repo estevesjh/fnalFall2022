@@ -1,5 +1,6 @@
 from halotools.empirical_models import PrebuiltHodModelFactory
 from scipy.integrate import simps
+from scipy.interpolate import interp1d
 import numpy as np
 
 ### Define Cosmology
@@ -36,10 +37,9 @@ class r200SHMR:
         self.rbins = rbins
         self.rmed = 0.5*(rbins[1:]+rbins[:-1])
         self.area = np.pi*self.rmed**2
-        self.volume = 4*np.pi*self.rmed**3/3
         
         # define other variables
-        self.sigma_bg = sigma_bg
+        self.sigma_bg = 10**sigma_bg
         self.z = z
         
         # define stellar-to-halo mass relation model
@@ -49,7 +49,7 @@ class r200SHMR:
         self._init_critical_density()
         pass
     
-    def fit(self, mstar, radii, bias=0.0):
+    def fit(self, mstar, radii, bias=0.0, fit_der=False):
         """fits the radii with 200 the critical density of the universe
 
         Parameters
@@ -69,10 +69,26 @@ class r200SHMR:
         self.compute_halo_mass(self.model_name, log_ms_low, log_ms_hig)
         
         # fit r200c based on the critical density of the unvierse
-        self.compute_r200c(delta=200,bias=bias)
+        self.compute_r200c(delta=200, bias=bias)
+        
+        if fit_der:
+            # use inital guess to recompute the stellar density
+            self.compute_r200c_derivative(mstar, radii)
+        pass
+        
+    def compute_r200c_derivative(self, mstar, radii, nobj=3):
+        rad_cut = radii[radii <= 1.75*self.r200c]
+        nbins = int(rad_cut.size/nobj)+1
+        self.rbins = np.percentile(rad_cut, np.linspace(0,100,nbins))
+        self.rmed_cut = 0.5*(self.rbins[1:]+self.rbins[:-1])
+        self.area = np.pi*self.rmed_cut**2
+        self.compute_stellar_mass_density(mstar, radii)
+        self.shmr_halo_mass_updated = np.log10(np.interp(10**self.smass_cluster, self.shmr_total_smass, self.bin_halo_mass))
+        self.fit_halo_mass_poly_derivative(p=3)
+        # output self.r200c_der and self.m200c_der
         pass
     
-    def compute_r200c(self, bias=0, delta=200, th=0.015, window=10):
+    def compute_r200c(self, bias=-0.32, delta=200, th=0.015, window=10):
         """compute_r200c
         
         function under construction
@@ -85,29 +101,11 @@ class r200SHMR:
         delta : int, optional
             delta times the critical density of the universe, eg. 200 rho_c, by default 200
         """
-        # haloMax = self.shmr_halo_mass[-1]-bias
-        self.fit_halo_mass_poly_derivative(bias)
+        self.shmr_halo_mass = self.shmr_halo_mass-bias
+        #self.fit_halo_mass_poly_derivative(bias)
+        self.fit_critical_density()
         #self.r200c = convertM200toR200(10**self.haloMax, self._rhoc, delta=delta)/(H0/100.)
         pass
-
-    def fit_halo_mass_poly_derivative(self, bias=0., th=0.015, window=10):
-        sm = smoothP(self.rmed, self.shmr_halo_mass, 3, deriv=0)
-        d1 = smoothP(self.rmed, self.shmr_halo_mass, 3, deriv=1)
-        d2 = smoothP(self.rmed, self.shmr_halo_mass, 3, deriv=2)
-        
-        if np.min(d1)>0:
-            m200c = np.interp(np.min(d1), d1, sm)
-            
-        elif d2[0]>0:
-            m200c = np.interp(0, d2, sm, fill_value='extrapolate')
-        else:
-            m200c = np.interp(0, d1, sm, fill_value='extrapolate')
-        
-        #m200c = np.max(sm)
-        #r200c = interp1d(sm, self.rmed, fill_value='extrapolate')(m200c) 
-        r200c = convertM200toR200(10**m200c, self._rhoc, delta=200)/(H0/100.)
-        self.r200c = r200c
-        self.m200c = m200c
         
     def compute_stellar_mass_density(self, mstar, radii):
         """compute stellar mass density a given aperture
@@ -120,10 +118,12 @@ class r200SHMR:
             cluster centric distance
         """
         # compute the total surface stellar mass density
-        smass_cum_total = self.compute_density(radii, 10**mstar)
+        smass_density_total = self.compute_density(radii, 10**mstar)
+        smass_cum_total = np.cumsum(smass_density_total,axis=0)
         
         # compute the cumulative stellar mass inside R subtracted by the backround
-        self.smass_cluster = np.log10(smass_cum_total -self.sigma_bg*self.area)
+        self.smass_cluster = np.log10(smass_cum_total - self.sigma_bg*self.area)
+        self.smass_density_cluster = (smass_density_total - self.sigma_bg)#*self.area/self.volume
     
     def compute_halo_mass(self, model_name, log_ms_low=10., log_ms_hig=12.5, nbins=50):
         """compute_halo_mass based on the stellar-to-halo mass relation (SHMR)
@@ -153,13 +153,15 @@ class r200SHMR:
         mean_ncen_smass = np.ones((self.bin_log_stellar_mass.size, self.bin_halo_mass.size))
         mean_nsat_smass = np.ones((self.bin_log_stellar_mass.size, self.bin_halo_mass.size))
         for i,logMt in enumerate(self.bin_log_stellar_mass):
-            model = PrebuiltHodModelFactory(model_name, threshold = logMt, redshift=self.z)
+            model = PrebuiltHodModelFactory(model_name, threshold = logMt,
+                                            redshift=self.z, haloprop_key='halo_mvir')
             mean_ncen_smass[i] = model.mean_occupation_centrals(prim_haloprop = self.bin_halo_mass)
             mean_nsat_smass[i] = model.mean_occupation_satellites(prim_haloprop = self.bin_halo_mass)
             
         ## predicted number of galaxies (haloMass, stellarMass)
         self.shmr_ntot = mean_ncen_smass+mean_nsat_smass
         pass
+    
     
     def shmr_cumulative_stellar_mass(self):
         # self.shmr_ntot number of central+number of satelites as a function of stellar mass and halo mass
@@ -171,7 +173,39 @@ class r200SHMR:
         # total cluster stellar mass as a function of halo mass 
         self.shmr_total_smass = total_smass
         pass
-            
+    
+    def fit_critical_density(self, rmax=8, delta=200, dX=20):
+        self.shmr_mass_density = (10**self.shmr_halo_mass)/self.area
+        critdense = self._rhoc*self.rmed
+
+        ratio = self.shmr_mass_density/critdense
+
+        f = interp1d(self.rmed, ratio, fill_value='extrapolate')
+        r_new = np.linspace(0.1,rmax,10000)
+        
+        deltas = np.linspace(delta-dX, delta+dX, 10)
+        r200m = np.median(interp1d(np.log10(f(r_new)),r_new)(np.log10(deltas)))
+                
+        self.m200c = np.interp(r200m, self.rmed, self.shmr_halo_mass)
+        self.r200c = convertM200toR200(10**self.m200c, self._rhoc, delta=delta) # in Mpc
+
+    def fit_halo_mass_poly_derivative(self, p=3, bias=0.):
+        sm = smoothP(self.rmed_cut, self.shmr_halo_mass_updated, p, deriv=0)
+        d1 = smoothP(self.rmed_cut, self.shmr_halo_mass_updated, p, deriv=1)
+        d2 = smoothP(self.rmed_cut, self.shmr_halo_mass_updated, p, deriv=2)
+
+        if np.min(d1)>0:
+            m200c = interp1d(d1, sm)(np.min(d1))
+        elif d2[0]>0:
+            m200c = interp1d(d2, sm, fill_value='extrapolate')(0) 
+        else:
+            m200c = interp1d(d1, sm, fill_value='extrapolate')(0) 
+
+        # r200c = interp1d(sm, self.rmed_cut, fill_value='extrapolate')(m200c) 
+        r200c = convertM200toR200(10**m200c, self._rhoc, delta=200) # in Mpc
+        self.r200c_der = r200c
+        self.m200c_der = m200c
+                
     def _init_critical_density(self):
         """compute critical stellar mass of the universe
 
@@ -191,8 +225,22 @@ class r200SHMR:
         weights : array
             cumulative sum of the weights
         """
-        return np.cumsum(np.histogram(x, weights=weights, bins=self.rbins)[0])
+        return np.histogram(x, weights=weights, bins=self.rbins)[0]
 
+    def compute_density_kde(self, x, weights,bw=0.2):
+        """compute radial density
+
+        Parameters
+        ----------
+        x : array
+            x-variable to compute the profile
+        weights : array
+            cumulative sum of the weights
+        """
+        p, N = compute_kde(x,weights)
+        
+        return np.cumsum(p(self.rmed)*N*bw)
+    
 def smoothP(x,y, window=3, deriv=0):
     idx = np.isfinite(x) & np.isfinite(y)
     coefs = np.polyfit(x[idx], y[idx], deg=window)
@@ -206,6 +254,35 @@ def convertM200toR200(M200,rho,delta=200):
     ## M200 in solar masses
     ## R200 in Mpc
     R200 = ( M200/(delta*4*np.pi*rho/3) )**(1/3.)
-    return R200*0.7
+    return R200
 
-## Example
+#from scipy.optimize import curve_fit
+#def a function
+# def f(x, a, b, c):
+#     return a*x**3 + b*x**2 + c*x
+
+# #do the fitting
+# popt, pcov = curve_fit(f, xs, ys)
+    
+def smoothP(x,y, window=3, deriv=0):
+    idx = np.isfinite(x) & np.isfinite(y)
+    coefs = np.polyfit(x[idx], y[idx], deg=window)
+    xnew = np.arange(0., 4., 100)
+    if deriv==0:
+        return np.poly1d(coefs)(x)
+    else:
+        return np.poly1d(coefs).deriv(deriv)(x)
+
+def convertM200toR200(M200,rho,delta=200):
+    ## M200 in solar masses
+    ## R200 in Mpc
+    R200 = ( M200/(delta*4*np.pi*rho/3) )**(1/3.)
+    return R200
+
+#from scipy.optimize import curve_fit
+#def a function
+# def f(x, a, b, c):
+#     return a*x**3 + b*x**2 + c*x
+
+# #do the fitting
+# popt, pcov = curve_fit(f, xs, ys)
