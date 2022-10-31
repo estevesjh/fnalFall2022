@@ -12,15 +12,31 @@ import os
 from astropy.table import Table, join
 from astropy.io.fits import getdata
 
+outpath = '/data/des61.a/data/johnny/mstar-alpha/data/lib/'
+path = '/data/des61.a/data/johnny/COSMOS/fnal2022/'
+fname = path+'desCosmosML_sample.fits'
+overwrite = True
+
 def create_newVector(data,col='MZ'):
     train = data['Train']
     xall = np.c_[data['xvec'],data['z_true']].T
     yall = (np.c_[data['smass'],data[col],data['QF']]).T
     return yall[:,train].T,yall[:,~train].T,xall[:,train].T,xall[:,~train].T
 
-path = '/data/des61.a/data/johnny/COSMOS/fnal2022/'
-fname = path+'desCosmosML_sample.fits'
-overwrite = True
+def create_simple_model_vector(data,col='MZ'):
+    train = data['Train']
+    colors_plus_err = data['xvec'][4:8]
+    xall = (np.c_[data['z_true'],data[col],colors_plus_err]).T
+    yall = (np.c_[data['smass'],data['QF']]).T
+    return yall[:,train].T,yall[:,~train].T,xall[:,train].T,xall[:,~train].T
+
+def create_all_model_vector(data):
+    train = data['Train']
+    colors_plus_err = data['xvec'][4:8]
+    absMags = (np.c_[data['MR'],data['MI'],data['MZ']]).T
+    xall = (np.c_[data['z_true'],absMags,colors_plus_err]).T
+    yall = (np.c_[data['smass'],data['QF']]).T
+    return yall[:,train].T,yall[:,~train].T,xall[:,train].T,xall[:,~train].T
 
 if not os.path.isfile(fname) or overwrite:
     names = ['./data/%s_indices_matched'%field for field in ['des','cosmos']]
@@ -92,7 +108,14 @@ print('Defining Quenching Galaxies')
 joined['QF'] = np.where(joined['sSFR']<=-10.2, 1, 0)
 
 print('Saving Vectors')
-mylist = create_newVector(joined,col='MZ')
+# mylist = create_newVector(joined,col='MZ')
+# for vec,label in zip(mylist,['y_train','y_test','x_train','x_test']):
+#     np.save(path+'qf_'+label,vec)
 
+mylist = create_simple_model_vector(joined,col='MZ')
 for vec,label in zip(mylist,['y_train','y_test','x_train','x_test']):
-    np.save(path+'qf_'+label,vec)
+    np.save(outpath+label,vec)
+
+mylist = create_all_model_vector(joined,col='MZ')
+for vec,label in zip(mylist,['y_train','y_test','x_train','x_test']):
+    np.save(outpath+label+'_all',vec)
