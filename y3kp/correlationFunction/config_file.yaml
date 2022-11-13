@@ -16,9 +16,9 @@ k_col: KAPPA        # The column name of kappa
 
 # Define the binning.  Binning in TreeCorr uses bins that are equally spaced in log(r).
 # (i.e. Natural log, not log10.)  There are four parameters of which you may specify any 3.
-min_sep: 6     # The minimum separation that you want included.
-max_sep: 360   # The maximum separation that you want included.
-nbins: 30      # The number of bins
+min_sep: 1     # The minimum separation that you want included.
+max_sep: 100   # The maximum separation that you want included.
+nbins: 20      # The number of bins
 #bin_size: 0.06     # The width of the bins in log(r).  In this case automatically calculated
                     # to be bin_size = log(max_sep/min_sep) / nbins ~= 0.06
 sep_units: arcmin   # The units of min_sep, max_sep
