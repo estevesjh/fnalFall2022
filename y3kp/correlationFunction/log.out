@@ -1,0 +1,118 @@
+Load Data
+Apply lambda and redshift bin cut
+Lambda and Redshift bin: 0, 0
+Sample size: 41413
+Lambda and Redshift bin: 1, 0
+Sample size: 2412
+Lambda and Redshift bin: 2, 0
+Sample size: 1111
+Lambda and Redshift bin: 3, 0
+Sample size: 370
+Lambda and Redshift bin: 4, 0
+Sample size: 260
+Lambda and Redshift bin: 0, 1
+Sample size: 69261
+Lambda and Redshift bin: 1, 1
+Sample size: 3970
+Lambda and Redshift bin: 2, 1
+Sample size: 1791
+Lambda and Redshift bin: 3, 1
+Sample size: 498
+Lambda and Redshift bin: 4, 1
+Sample size: 347
+Lambda and Redshift bin: 0, 2
+Sample size: 89154
+Lambda and Redshift bin: 1, 2
+Sample size: 4573
+Lambda and Redshift bin: 2, 2
+Sample size: 1863
+Lambda and Redshift bin: 3, 2
+Sample size: 524
+Lambda and Redshift bin: 4, 2
+Sample size: 284
+Redshift bin: 0
+Sample size: 4153
+Redshift bin: 1
+Sample size: 6606
+Redshift bin: 2
+Sample size: 7244
+Running trecorr on lambda/redshift bins
+
+Saved outfiles
+./output/kmeans20/rmy3_3d_smallScales_l0-z0.npz
+./output/kmeans20/rmy3_3d_smallScales_l0-z1.npz
+./output/kmeans20/rmy3_3d_smallScales_l0-z2.npz
+./output/kmeans20/rmy3_3d_smallScales_l1-z0.npz
+./output/kmeans20/rmy3_3d_smallScales_l1-z1.npz
+./output/kmeans20/rmy3_3d_smallScales_l1-z2.npz
+./output/kmeans20/rmy3_3d_smallScales_l2-z0.npz
+./output/kmeans20/rmy3_3d_smallScales_l2-z1.npz
+./output/kmeans20/rmy3_3d_smallScales_l2-z2.npz
+./output/kmeans20/rmy3_3d_smallScales_l3-z0.npz
+./output/kmeans20/rmy3_3d_smallScales_l3-z1.npz
+./output/kmeans20/rmy3_3d_smallScales_l3-z2.npz
+./output/kmeans20/rmy3_3d_smallScales_l4-z0.npz
+./output/kmeans20/rmy3_3d_smallScales_l4-z1.npz
+./output/kmeans20/rmy3_3d_smallScales_l4-z2.npz
+./output/kmeans20/rmy3_3d_smallScales_l99-z0.npz
+./output/kmeans20/rmy3_3d_smallScales_l99-z1.npz
+./output/kmeans20/rmy3_3d_smallScales_l99-z2.npz
+Load Data
+Apply lambda and redshift bin cut
+Lambda and Redshift bin: 0, 0
+Sample size: 41413
+Lambda and Redshift bin: 1, 0
+Sample size: 2412
+Lambda and Redshift bin: 2, 0
+Sample size: 1111
+Lambda and Redshift bin: 3, 0
+Sample size: 370
+Lambda and Redshift bin: 4, 0
+Sample size: 260
+Lambda and Redshift bin: 0, 1
+Sample size: 69261
+Lambda and Redshift bin: 1, 1
+Sample size: 3970
+Lambda and Redshift bin: 2, 1
+Sample size: 1791
+Lambda and Redshift bin: 3, 1
+Sample size: 498
+Lambda and Redshift bin: 4, 1
+Sample size: 347
+Lambda and Redshift bin: 0, 2
+Sample size: 89154
+Lambda and Redshift bin: 1, 2
+Sample size: 4573
+Lambda and Redshift bin: 2, 2
+Sample size: 1863
+Lambda and Redshift bin: 3, 2
+Sample size: 524
+Lambda and Redshift bin: 4, 2
+Sample size: 284
+Redshift bin: 0
+Sample size: 4153
+Redshift bin: 1
+Sample size: 6606
+Redshift bin: 2
+Sample size: 7244
+Running trecorr on lambda/redshift bins
+
+Saved outfiles
+./output/kmeans20/rmy3_smallScales_l0-z0.npz
+./output/kmeans20/rmy3_smallScales_l0-z1.npz
+./output/kmeans20/rmy3_smallScales_l0-z2.npz
+./output/kmeans20/rmy3_smallScales_l1-z0.npz
+./output/kmeans20/rmy3_smallScales_l1-z1.npz
+./output/kmeans20/rmy3_smallScales_l1-z2.npz
+./output/kmeans20/rmy3_smallScales_l2-z0.npz
+./output/kmeans20/rmy3_smallScales_l2-z1.npz
+./output/kmeans20/rmy3_smallScales_l2-z2.npz
+./output/kmeans20/rmy3_smallScales_l3-z0.npz
+./output/kmeans20/rmy3_smallScales_l3-z1.npz
+./output/kmeans20/rmy3_smallScales_l3-z2.npz
+./output/kmeans20/rmy3_smallScales_l4-z0.npz
+./output/kmeans20/rmy3_smallScales_l4-z1.npz
+./output/kmeans20/rmy3_smallScales_l4-z2.npz
+./output/kmeans20/rmy3_smallScales_l99-z0.npz
+./output/kmeans20/rmy3_smallScales_l99-z1.npz
+./output/kmeans20/rmy3_smallScales_l99-z2.npz

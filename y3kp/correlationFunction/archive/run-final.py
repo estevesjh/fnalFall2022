@@ -18,13 +18,28 @@ Example:
 """
 import os
 import numpy as np
+import treecorr
 
+import argparse
+from joblib import Parallel, delayed
+
+# local libraries
 from jackEstimatorKmeans import JackKniferKmeans
-from util import load_data, SetupFiles, config
+from set_bins_files import SetupFiles, config 
+from util import load_data, apply_bin_cut
+
+parser = argparse.ArgumentParser(description='Run TreeCorr in Npatches and estimate a JK covariance')
+parser.add_argument('tag', type=str, help='a label to the output files')
+parser.add_argument('lbin', type=int, help='lambda bin id')
+parser.add_argument('zbin', type=int, help='redshift bin id')
+parser.add_argument('--nPatches', default=10, type=int, help='number of patches used by the JK cov estimator')
+parser.add_argument('--nCores', default=2, type=int, help='number of cores')
+parser.add_argument('-p', '--parallel', default=1, type=int, help='parallel true (1) or false (0)')
+
 
 def get_angular_correlation(data, randoms, config=config):
     # load data and random catalogs
-    cat = treecorr.Catalog(ra=data['ra'], dec=data['dec'], ra_units='degrees', dec_units='degrees')
+    cat = treecorr.Catalog(ra=data['ra'], dec=data['dec'], r=data['rcomov'], ra_units='degrees', dec_units='degrees')
     rcat = treecorr.Catalog(ra=randoms['ra'], dec=randoms['dec'], ra_units='degrees', dec_units='degrees')
     
     # process data catalog
@@ -94,16 +109,24 @@ def save_jk_covariance(fname, output):
 
 
 ############## START CODE ################
-def main(tag, n_patches, parallel=False, nCores=2):
+def main(tag, n_patches, lbd_bin=0, z_bin=0, parallel=False, nCores=2):
     # setup output filenames
+    tag += '_l%i-z%i'%(lbd_bin, z_bin)
     fl = SetupFiles(tag, n_patches)
     
     print('Load Data')
     rm_all, ran_all = load_data()
     
     print('Apply lambda and redshift bin cut')
-    cut = np.random.randint(len(ran_all),size=100000)
-    rm, ran = rm_all, ran_all[cut]
+    rm ,ran = apply_bin_cut(lbd_bin, z_bin, rm_all, ran_all)
+    
+    # take only 30 times the number of rm clusters
+    Nran_size = 30*len(rm)
+    cut = np.random.randint(len(ran),size=Nran_size)
+    ran = ran[cut]
+    
+    print('Lambda and Redshift bin: %i, %i'%(lbd_bin, z_bin))
+    print('Sample size: %i'%(len(rm)))
     
     print('JK Patches')
     jk =  set_jk_estimator(rm, n_patches, fl.fname_kmeans_centers)
@@ -127,14 +150,13 @@ def main(tag, n_patches, parallel=False, nCores=2):
     save_jk_covariance(fl.outfile, [rbins, cov, sig, mean])
     print('Saved outfile: %s'%fl.outfile)
 
-if __name__ == '__main__':
-    tag = 'test_all'
-    Npatches = 10
-    main(tag, Npatches)
+if __name__ == "__main__":
+    args = parser.parse_args()
+    main(args.tag, args.nPatches, lbd_bin=args.lbin, z_bin=args.zbin,
+         parallel=args.parallel, nCores=args.nCores)
 
 
 # To Do
-# - Make ArgParser
-# - Define Lambda and Redshift Bin
-# - Study the n_patches
-# nohup python run.py >log 2>&1 &
+# TreeCorr has an implementation of kmeans
+# Also, you can have the jk covariance
+# https://rmjarvis.github.io/TreeCorr/_build/html/cov.html#random-catalogs
