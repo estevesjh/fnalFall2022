@@ -27,5 +27,9 @@ class FileLocs(object):
         
         # mock catalogs
         self.mock_fname = self.halo_run_loc + 'mock_buzzard_like_y3_v0.fits'
+        
+        # create datavector
+        self.dataVector_fname = self.halo_run_loc + "dataVec_mock_buzzard_like.hdf5"
+        # boost-factor tables (zsrc_eff, beta_eff) with beta := d_ls/d_s
         self.mock_boost_factor_1d = self.halo_run_loc + 'beta_table_zl_y1_like.npz'
         self.mock_boost_factor_2d = self.halo_run_loc + 'beta_table_zl_radii_y1_like.npz'

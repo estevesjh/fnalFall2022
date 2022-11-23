@@ -17,6 +17,6 @@ zmeans = np.array([0.275, 0.4, 0.575])
 zmeans_ij = np.array([0.275, 0.4, 0.575, 0.275, 0.4, 0.575, 0.275, 0.4, 0.575, 0.275, 0.4, 0.575])
 
 # lambda bins
-lbdbins =  np.array([5, 20, 30, 45, 60, 900])
+lbdbins =  np.array([5, 10, 14, 20, 30, 45, 60, 130])
 lbdmeans = 0.5*(lbdbins[1:]+lbdbins[:-1])
 lbdmeans_ij = np.repeat(lbdmeans, 3)

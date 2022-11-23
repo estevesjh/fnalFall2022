@@ -133,3 +133,9 @@ dmypy.json
 
 # mac
 .DS_Store
+
+# tmp data
+*tmp*.fits
+
+# hdf files
+*.hdf5
