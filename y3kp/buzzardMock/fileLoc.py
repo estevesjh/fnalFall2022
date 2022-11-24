@@ -27,6 +27,8 @@ class FileLocs(object):
         
         # mock catalogs
         self.mock_fname = self.halo_run_loc + 'mock_buzzard_like_y3_v0.fits'
+        self.mock_random_fname = self.halo_run_loc + 'mock_buzzard_like_y3_v0_randoms.fits'
+        self.mock_nbody_fname =self.halo_run_loc+'mock_buzzard_like_y3_nbody.fits'
         
         # create datavector
         self.dataVector_fname = self.halo_run_loc + "dataVec_mock_buzzard_like.hdf5"
