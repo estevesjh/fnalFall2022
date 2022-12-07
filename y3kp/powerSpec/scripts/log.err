@@ -1,0 +1,50 @@
+[ 000023.96 ]   0: 12-07 05:51  CurrentMPIComm  INFO     Entering a current communicator of size 1
+[ 000023.94 ]   1: 12-07 05:51  CurrentMPIComm  INFO     Entering a current communicator of size 639
+[ 000024.06 ]   1: 12-07 05:51  CatalogSource   INFO     Extra arguments to FileType: () {}
+[ 000024.15 ]   1: 12-07 05:51  CatalogSource   INFO     Extra arguments to FileType: () {}
+[ 000048.43 ]   1: 12-07 05:52  FKPCatalog      INFO     cartesian coordinate range: [-104.73959483 -668.28431275 -906.02903005] : [999.2773871  917.79009758 103.82903728]
+[ 000048.43 ]   1: 12-07 05:52  FKPCatalog      INFO     BoxSize = [1127. 1618. 1031.]
+[ 000048.43 ]   1: 12-07 05:52  FKPCatalog      INFO     BoxCenter = [ 447.26889614  124.75289242 -401.09999639]
+/global/common/software/m3035/conda/envs/bcast-bccp-3.7/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+[ 000048.48 ]   1: 12-07 05:52  ConvolvedFFTPower INFO     using compensation function CompensateTSCShotnoise for source 'first'
+[ 000048.48 ]   1: 12-07 05:52  ConvolvedFFTPower INFO     using compensation function CompensateTSCShotnoise for source 'second'
+/global/common/software/m3035/conda/envs/bcast-bccp-3.7/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+[ 000809.92 ]   1: 12-07 06:04  CatalogMesh     INFO     Chunk 0 ~ 4194304 / 140 
+[ 000810.89 ]   1: 12-07 06:04  CatalogMesh     INFO     painted 89016 out of 89016 objects to mesh
+[ 000810.98 ]   1: 12-07 06:04  CatalogMesh     INFO     painted 89016 out of 89016 objects to mesh
+[ 000810.98 ]   1: 12-07 06:04  CatalogMesh     INFO     mean particles per cell is 7.34808e-06
+/global/common/software/m3035/conda/envs/bcast-bccp-3.7/lib/python3.7/logging/__init__.py:369: ComplexWarning: Casting complex values to real discards the imaginary part
+  msg = msg % self.args
+[ 000810.98 ]   1: 12-07 06:04  CatalogMesh     INFO     sum is 42854 
+[ 000810.98 ]   1: 12-07 06:04  FKPCatalogMesh  INFO     data painted.
+/global/common/software/m3035/conda/envs/bcast-bccp-3.7/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+[ 000811.19 ]   1: 12-07 06:04  CatalogMesh     INFO     Chunk 0 ~ 4194304 / 1836 
+[ 000812.97 ]   1: 12-07 06:04  CatalogMesh     INFO     painted 1173090 out of 1173090 objects to mesh
+[ 000813.05 ]   1: 12-07 06:04  CatalogMesh     INFO     painted 1173090 out of 1173090 objects to mesh
+[ 000813.05 ]   1: 12-07 06:04  CatalogMesh     INFO     mean particles per cell is 9.69642e-05
+/global/common/software/m3035/conda/envs/bcast-bccp-3.7/lib/python3.7/logging/__init__.py:369: ComplexWarning: Casting complex values to real discards the imaginary part
+  msg = msg % self.args
+[ 000813.05 ]   1: 12-07 06:04  CatalogMesh     INFO     sum is 565495 
+[ 000813.24 ]   1: 12-07 06:04  FKPCatalogMesh  INFO     randoms painted.
+[ 000813.66 ]   1: 12-07 06:04  FKPCatalogMesh  INFO     volume per cell is 0.322362
+[ 000813.76 ]   1: 12-07 06:04  FKPCatalogMesh  INFO     field: (FKPCatalog(species=['data', 'randoms']) as CatalogMesh) painting done
+[ 000813.77 ]   1: 12-07 06:04  ConvolvedFFTPower INFO     tsc painting of 'first' done
+[ 000821.59 ]   1: 12-07 06:04  ConvolvedFFTPower INFO     ell = 0 done; 1 r2c completed
+/global/common/software/m3035/conda/envs/bcast-bccp-3.7/lib/python3.7/site-packages/nbodykit/algorithms/convpower/fkp.py:531: ComplexWarning: Casting complex values to real discards the imaginary part
+  xgrid = [xx.astype('f8') + offset[ii] for ii, xx in enumerate(density2.slabs.optx)]
+/global/common/software/m3035/conda/envs/bcast-bccp-3.7/lib/python3.7/site-packages/nbodykit/algorithms/convpower/fkp.py:536: ComplexWarning: Casting complex values to real discards the imaginary part
+  kgrid = [kk.astype('f8') for kk in cfield.slabs.optx]
+[ 000850.50 ]   1: 12-07 06:05  ConvolvedFFTPower INFO     normalized power spectrum with `randoms.norm = 2.195962`
+[ 000893.88 ]   1: 12-07 06:06  ConvolvedFFTPower INFO     ell = 2 done; 5 r2c completed
+[ 000983.78 ]   1: 12-07 06:07  ConvolvedFFTPower INFO     ell = 4 done; 9 r2c completed
+[ 001106.87 ]   1: 12-07 06:09  ConvolvedFFTPower INFO     ell = 6 done; 13 r2c completed
+[ 001268.66 ]   1: 12-07 06:12  ConvolvedFFTPower INFO     ell = 8 done; 17 r2c completed
+[ 001472.92 ]   1: 12-07 06:15  ConvolvedFFTPower INFO     ell = 10 done; 21 r2c completed
+[ 001722.64 ]   1: 12-07 06:19  ConvolvedFFTPower INFO     ell = 12 done; 25 r2c completed
+slurmstepd: error: *** STEP 64793787.0 ON nid00736 CANCELLED AT 2022-12-07T06:20:34 DUE TO TIME LIMIT ***
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+srun: got SIGCONT
+srun: forcing job termination

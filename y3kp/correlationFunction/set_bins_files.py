@@ -26,11 +26,11 @@ config ={
 
 # 3d metric
 config3 = {
-        'nbins': 8,
-         'max_sep': 50,
+        'nbins': 31,
+         'max_sep': 200,
          'min_sep': 4,
-         'min_rpar': -300,
-         'max_rpar': 300,
+         'min_rpar': -200,
+         'max_rpar': 200,
          'verbose': 0
         }
 

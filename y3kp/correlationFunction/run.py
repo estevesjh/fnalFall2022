@@ -25,13 +25,13 @@ from joblib import Parallel, delayed
 
 # local libraries
 from set_bins_files import SetupFiles, config, config3
-from util import load_data, apply_bin_cut
+from util import load_data, apply_bin_cut, load_mock
 
 parser = argparse.ArgumentParser(description='Run TreeCorr in Npatches and estimate a JK covariance')
 parser.add_argument('tag', type=str, help='a label to the output files')
 parser.add_argument('--is_3d', default=1, type=int, help='computes angular or projected distance correlation function')
 parser.add_argument('--no_rands', default=100, type=int, help='Nrandoms = no_rands* Nclusters, how many more randoms that clusters')
-parser.add_argument('--nPatches', default=10, type=int, help='number of patches used by the JK cov estimator')
+parser.add_argument('--nPatches', default=20, type=int, help='number of patches used by the JK cov estimator')
 parser.add_argument('--nCores', default=2, type=int, help='number of cores')
 parser.add_argument('-p', '--parallel', default=1, type=int, help='parallel true (1) or false (0)')
 
@@ -85,37 +85,39 @@ def run_treecorr_jk(outfile, cat, rcat, n_patches=10, is_3d=False):
     
     # save results
     save_jk_covariance(outfile, [r, mean, cov, sig, nobj])
-
+    
 ############## START CODE ################
 def main(tag, n_patches, is_3d=False, ran_factor=30, parallel=False, nCores=2):
     # setup output filenames
     fl = SetupFiles(tag, n_patches)
     
     print('Load Data')
-    rm_all, ran_all = load_data()
-
+    # rm_all, ran_all = load_data()
+    data = load_mock(3, n_patches=n_patches)
+    
     print('Apply lambda and redshift bin cut')
-    data  = []
-    outfiles = []
-    for z_bin in range(3):
-        for lbd_bin in range(5):
-            rm ,ran = apply_bin_cut(lbd_bin, z_bin, rm_all, ran_all, n_patches = n_patches,
-                                    ran_factor=ran_factor, is_3d=is_3d)
-            print('Lambda and Redshift bin: %i, %i'%(lbd_bin, z_bin))
-            print('Sample size: %i'%(rm.ra.size))
+    # data  = []
+    # outfiles = []
+    # for z_bin in range(3):
+        # for lbd_bin in range(5):
+            # rm ,ran = apply_bin_cut(lbd_bin, z_bin, rm_all, ran_all, n_patches = n_patches, ran_factor=ran_factor, is_3d=is_3d)
+            # print('Lambda and Redshift bin: %i, %i'%(lbd_bin, z_bin))
+            # print('Sample size: %i'%(rm.ra.size))
             
             # append data
-            data.append([rm, ran])
-            outfiles.append(fl.get_outfile(lbd_bin,z_bin))
+            # data.append([rm, ran])
+            # outfiles.append(fl.get_outfile(lbd_bin,z_bin))
     
+    outfiles = []
     for z_bin in range(3):
-        rm ,ran = apply_bin_cut(lbd_bin, z_bin, rm_all, ran_all, n_patches=n_patches, 
-                                ran_factor=ran_factor, is_3d=is_3d, is_all=True)
-        print('Redshift bin: %i'%(z_bin))
-        print('Sample size: %i'%(rm.ra.size))
-
-        data.append([rm, ran])
+        #rm ,ran = apply_bin_cut(lbd_bin, z_bin, rm_all, ran_all, n_patches=n_patches, 
+        #                        ran_factor=ran_factor, is_3d=is_3d, is_all=True)
+        # print('Redshift bin: %i'%(z_bin))
+        #print('Sample size: %i'%(data[z_bin][0].ra.size))
+        #print('ra: ', np.max(data[z_bin][0].ra), np.min(data[z_bin][0].ra))
+        #data.append([rm, ran])
         outfiles.append(fl.get_outfile(99,z_bin))
+
     
     nbins = len(outfiles)
     print('Running trecorr on lambda/redshift bins')

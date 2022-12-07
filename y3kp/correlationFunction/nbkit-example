@@ -1,0 +1,138 @@
+Currently Loaded Modulefiles:
+  1) modules/3.2.11.4
+  2) darshan/3.4.0
+  3) craype-network-aries
+  4) craype-haswell
+  5) cray-mpich/7.7.19
+  6) python/3.9-anaconda-2021.11
+  7) gcc/11.2.0
+  8) craype/2.7.10
+  9) cray-libsci/20.09.1
+ 10) udreg/2.3.2-7.0.3.1_3.26__g5f0d670.ari
+ 11) ugni/6.0.14.0-7.0.3.1_6.12__g8101a58.ari
+ 12) pmi/5.0.17
+ 13) dmapp/7.1.1-7.0.3.1_3.30__g93a7e9f.ari
+ 14) gni-headers/5.0.12.0-7.0.3.1_3.16__gd0d73fe.ari
+ 15) xpmem/2.2.27-7.0.3.1_3.18__gada73ac.ari
+ 16) job/2.2.4-7.0.3.1_3.24__g36b56f4.ari
+ 17) dvs/2.12_2.2.224-7.0.3.1_3.24__gc77db2af
+ 18) alps/6.6.67-7.0.3.1_3.31__gb91cd181.ari
+ 19) rca/2.2.20-7.0.3.1_3.29__g8e3fb5b.ari
+ 20) atp/3.14.9
+ 21) perftools-base/21.12.0
+ 22) PrgEnv-gnu/6.0.10
+ 23) Base-opts/2.4.142-7.0.3.1_3.14__g8f27585.ari
+Warming up caches and configs on computing nodes ....
+srun: Job 64500115 step creation temporarily disabled, retrying (Requested nodes are busy)
+srun: Step created for job 64500115
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+[ 000004.11 ]   0: 11-25 08:55  LogNormalCatalog INFO     Growth Rate is 0.770123
+[ 000004.11 ]   0: 11-25 08:55  LogNormalCatalog INFO     Generating whitenoise
+[ 000004.11 ]   0: 11-25 08:55  LogNormalCatalog INFO     Write noise generated
+[ 000004.11 ]   0: 11-25 08:55  LogNormalCatalog INFO     Displacement computed in fourier space
+[ 000004.11 ]   0: 11-25 08:55  LogNormalCatalog INFO     Overdensity computed in configuration space: std = 0.0506894974586917
+[ 000004.11 ]   0: 11-25 08:55  LogNormalCatalog INFO     Displacement computed in configuration space: std = [1.9101121893483684, 1.8610707732553282, 1.9480985736737333]
+[ 000004.11 ]   0: 11-25 08:55  LogNormalCatalog INFO     gaussian field is generated
+[ 000004.12 ]   0: 11-25 08:55  LogNormalCatalog INFO     Lognormal transformation done
+[ 000004.12 ]   0: 11-25 08:55  LogNormalCatalog INFO     Poisson sampling done, total number of objects is 825
+[ 000004.12 ]   0: 11-25 08:55  LogNormalCatalog INFO     catalog produced. Assigning in cell shift.
+[ 000004.12 ]   0: 11-25 08:55  LogNormalCatalog INFO     sorting done
+[ 000004.13 ]   0: 11-25 08:55  LogNormalCatalog INFO     catalog shifted.
+[ 000004.13 ]   0: 11-25 08:55  LogNormalCatalog INFO     poisson sampling is generated
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+/dev/shm/local/lib/python3.7/site-packages/numpy/core/_asarray.py:102: VisibleDeprecationWarning: Creating an ndarray from ragged nested sequences (which is a list-or-tuple of lists-or-tuples-or ndarrays with different lengths or shapes) is deprecated. If you meant to do this, you must specify 'dtype=object' when creating the ndarray.
+  return array(a, dtype, copy=False, order=order)
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+Traceback (most recent call last):
+  File "example.py", line 14, in <module>
+    source['Position'] += transform.VectorProjection(source['VelocityOffset'], [0,0,1])
+AttributeError: module 'nbodykit.transform' has no attribute 'VectorProjection'
+srun: error: nid12876: tasks 0-15: Exited with exit code 1
+srun: launch/slurm: _step_signal: Terminating StepId=64500115.2

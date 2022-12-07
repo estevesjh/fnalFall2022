@@ -5,6 +5,7 @@
 import h5py
 import numpy as np
 from astropy.table import Table
+from astropy.io.fits import getdata
 import treecorr
 
 # import bins
@@ -31,6 +32,30 @@ rm_fname = path+'y3_gold_2.2.1_wide_sofcol_run_redmapper_v0.5.1_redmagic_12_3_19
 columns = ['mem_match_id','ra','dec','z_lambda','lambda_chisq']
 path_rm = 'catalog/redmapper/lgt5'
 path_ran = 'randoms/redmapper/lgt5'
+
+from fileLoc import FileLocs
+floc = FileLocs(machine='nersc')
+path = floc.halo_run_loc
+def load_mock(nz=3, n_patches=20):
+    datas = []
+    for i in range(nz):
+        fname = floc.mock_nbody_fname
+        fname2 = floc.mock_random_fname
+        #fname = path+'data_%i.fits'%i
+        #fname2 = path+'rnd_%i.fits'%i
+        
+        data = Table(getdata(fname))
+        rnd = Table(getdata(fname2))
+        data['rcomov'] = get_rcomov(np.array(data['z']))
+        rnd['rcomov'] = get_rcomov(np.array(rnd['z']))
+        
+        c1 = treecorr.Catalog(ra=data['ra'], dec=data['dec'], r=data['rcomov'],
+                               npatch=n_patches, ra_units='degrees', dec_units='degrees')
+        c2 = treecorr.Catalog(ra=rnd['ra'], dec=rnd['dec'], r=rnd['rcomov'],
+                               npatch=n_patches, ra_units='degrees', dec_units='degrees')
+        
+        datas.append([c1, c2])
+    return datas
 
 def load_data():
     rm = Table(read_hdf5(rm_fname, 'catalog/redmapper/lgt5', columns=columns))
