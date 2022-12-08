@@ -51,7 +51,8 @@ random['FKPWeight'] = 1.0 / (1 + random['NZ'] * 1e4)
 
 # do box separation
 # bins
-lbd_bins = np.array([5, 10, 14, 20, 30, 45, 60, 130])
+lbd_bins = np.array([5, 10, 14, 20, 30, 45, 60, 160])
+# lbd_bins = np.array([5, 15, 25, 40, 160])
 lbd_min = lbd_bins[:-1]
 lbd_max = lbd_bins[1:]
 
@@ -75,6 +76,16 @@ for lmin, lmax in zip(lbd_min, lbd_max):
         
         datas.append(data[mask])
         randoms.append(random[maskr])
+
+for zmin, zmax in zip(zmin_list, zmax_list):
+    mask = get_mask(data['z'], zmin, zmax)
+    maskr = get_mask(random['z'], zmin, zmax)
+    
+    mask &= get_mask(data['lambda_mor'], 14, 200)
+    maskr &= get_mask(random['lambda_mor'], 14, 200)
+    
+    datas.append(data[mask])
+    randoms.append(random[maskr])
 
 # save data
 if not os.path.isdir(outdir):

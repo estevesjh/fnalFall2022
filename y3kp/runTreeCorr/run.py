@@ -24,8 +24,8 @@ import argparse
 from joblib import Parallel, delayed
 
 # local libraries
-from set_config import config, config3
-from util import load_mock
+from set_config import config, config3, rp_bins_phys_mpc
+from util import load_mock, theta_converter
 
 parser = argparse.ArgumentParser(description='Run TreeCorr in Npatches and estimate a JK covariance')
 parser.add_argument('tag', type=str, help='a label to the output files')
@@ -76,13 +76,18 @@ def pick_config(is_3d):
     else:
         return config
     
-def run_treecorr_jk(outfile, cat, rcat, n_patches=10, is_3d=False):
+def run_treecorr_jk(outfile, cat, rcat, n_patches=10, z=0.1, is_3d=False):
     # at least 50 clusters in each patch
     #n_patchs_min = int(np.where(cat.ra.size/n_patches<50, cat.ra.size/50, n_patches))
     
     # pick config file
     _config = pick_config(is_3d)
     
+    # theta set to follow the fiducial cosmology radial binning
+    theta = theta_converter(rp_bins_phys_mpc, z)
+    _config['max_sep'] = np.max(theta)
+    _config['min_sep'] = np.min(theta)
+
     # run treecorr on n_patches
     r, mean, sig, cov, nobj = get_angular_correlation_jk_cov(cat, rcat, config=_config,n_patches=n_patches)
     
@@ -91,21 +96,21 @@ def run_treecorr_jk(outfile, cat, rcat, n_patches=10, is_3d=False):
     
 ############## START CODE ################
 def main(tag, n_patches, is_3d=False, parallel=False, nCores=10): 
-    nbins = 21
+    nbins = 24
     
     print('Load Data')    
     # load data in redshift and lambda bins
-    data, outfiles = load_mock(nsize=nbins, n_patches=n_patches, is_3d=is_3d)
+    data, outfiles, zvalues = load_mock(nsize=nbins, n_patches=n_patches, is_3d=is_3d)
     # print('\n'.join(sorted(outfiles)))
 
     print('Running trecorr on lambda/redshift bins')
     if parallel:
         Parallel(n_jobs=nCores)(delayed(run_treecorr_jk)
-                            (outfiles[ii], data[ii][0], data[ii][1], n_patches, is_3d=is_3d)
+                            (outfiles[ii], data[ii][0], data[ii][1], n_patches, zvalues[ii], is_3d=is_3d)
                             for ii in range(nbins))
     else:
         for ii in range(nbins):
-            run_treecorr_jk(outfiles[ii], data[ii][0], data[ii][1], n_patches, is_3d=is_3d)
+            run_treecorr_jk(outfiles[ii], data[ii][0], data[ii][1], n_patches, zvalues[ii], is_3d=is_3d)
     
     print('')
     print('Saved outfiles')

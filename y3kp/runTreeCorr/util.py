@@ -12,12 +12,22 @@ import treecorr
 # specify our cosmology
 from astropy.cosmology import FlatLambdaCDM
 cosmo = FlatLambdaCDM(H0=70, Om0=0.3, Tcmb0=2.725)
-
 # interpolate comoving distance
 from scipy.interpolate import interp1d
 
+# from make_data import zmeans
+zmeans = np.array([0.25, 0.44, 0.575])
+alpha = 50
+
+# angular conversion factor
+rad2deg = 180/np.pi
+conv_factor = {"radians": 1.,
+               "degrees": 1.*rad2deg, 
+               "arcmin" : 60.*rad2deg, 
+               "arcsec" : 360.*rad2deg}
+
 h = cosmo.H(0).value/100.
-zgrid = np.linspace(0., 10., 10000)
+zgrid = np.linspace(0., 1., 100)
 rcomov = cosmo.comoving_distance(np.array(zgrid)).value/h
 get_rcomov = interp1d(zgrid, rcomov)
 
@@ -37,12 +47,17 @@ if not os.path.isdir(outdir):
 def load_mock(nsize=14, n_patches=20, is_3d=False):
     datas = []
     outfiles = []
+    zvalues = []
     for i in range(nsize):
         fname1 = fname_base%('data', i)
         fname2 = fname_base%('rnd', i)
         
         data = Table(getdata(fname1))
         rnd = Table(getdata(fname2))
+
+        cut = np.random.randint(len(rnd), size=int(alpha*len(data)))
+        rnd = rnd[cut]
+
         if is_3d:
             data['rcomov'] = get_rcomov(np.array(data['z']))
             rnd['rcomov'] = get_rcomov(np.array(rnd['z']))
@@ -58,8 +73,20 @@ def load_mock(nsize=14, n_patches=20, is_3d=False):
             c2 = treecorr.Catalog(ra=rnd['ra'], dec=rnd['dec'],
                                     npatch=n_patches, ra_units='degrees', dec_units='degrees')
 
+        ij = np.argmin(np.abs(zmeans-np.mean(data['z'])))
 
         datas.append([c1, c2])
-        outfiles.append(fname_out%('treeCorr',i))
+        outfiles.append(fname_out%('kmeans%i'%n_patches,i))
+        zvalues.append(np.mean(zmeans[ij]))
 
-    return datas, outfiles
+    return datas, outfiles, zvalues
+
+def theta_converter(r,z):
+    # radii or z needs to be a float number 
+    theta_vec = r/cosmo.angular_diameter_distance(z).value
+    return theta_vec*conv_factor["arcmin"]
+
+def convert_profile(z, profile):
+    theta_vec = theta_converter(radii, z)
+    interp_gamma_t = interp1d(theta_vec, profile, bounds_error=False)(theta)
+    return interp_gamma_t
