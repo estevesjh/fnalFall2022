@@ -31,7 +31,7 @@ parser = argparse.ArgumentParser(description='Run TreeCorr in Npatches and estim
 parser.add_argument('tag', type=str, help='a label to the output files')
 # parser.add_argument('--dataset', default='mock', type=str, help='input dataset, available options are mock or desy3')
 parser.add_argument('--nPatches', default=20, type=int, help='number of patches used by the JK cov estimator')
-parser.add_argument('--is_3d', default=0, type=int, help='computes angular or projected distance correlation function')
+parser.add_argument('--is_3d', default=1, type=int, help='computes angular or projected distance correlation function')
 parser.add_argument('--nCores', default=2, type=int, help='number of cores')
 parser.add_argument('-p', '--parallel', default=1, type=int, help='parallel true (1) or false (0)')
 
@@ -83,10 +83,11 @@ def run_treecorr_jk(outfile, cat, rcat, n_patches=10, z=0.1, is_3d=False):
     # pick config file
     _config = pick_config(is_3d)
     
-    # theta set to follow the fiducial cosmology radial binning
-    theta = theta_converter(rp_bins_phys_mpc, z)
-    _config['max_sep'] = np.max(theta)
-    _config['min_sep'] = np.min(theta)
+    if not is_3d:
+        # theta set to follow the fiducial cosmology radial binning
+        theta = theta_converter(rp_bins_phys_mpc, z)
+        _config['max_sep'] = np.max(theta)
+        _config['min_sep'] = np.min(theta)
 
     # run treecorr on n_patches
     r, mean, sig, cov, nobj = get_angular_correlation_jk_cov(cat, rcat, config=_config,n_patches=n_patches)
@@ -96,7 +97,7 @@ def run_treecorr_jk(outfile, cat, rcat, n_patches=10, z=0.1, is_3d=False):
     
 ############## START CODE ################
 def main(tag, n_patches, is_3d=False, parallel=False, nCores=10): 
-    nbins = 24
+    nbins = 15
     
     print('Load Data')    
     # load data in redshift and lambda bins

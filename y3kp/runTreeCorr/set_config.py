@@ -7,9 +7,9 @@
 import os
 import numpy as np
 
-Rmin_phys_mpc = 3.
-Rmax_phys_mpc = 20.
-nbins_phys_mpc = 4
+Rmin_phys_mpc = 5.
+Rmax_phys_mpc = 35.
+nbins_phys_mpc = 6
 
 lnrp_bins_phys_mpc = np.linspace(np.log(Rmin_phys_mpc), np.log(Rmax_phys_mpc), nbins_phys_mpc+1)
 rp_bins_phys_mpc = np.exp(lnrp_bins_phys_mpc)
@@ -24,16 +24,16 @@ config ={
          'sep_units': 'arcmin',
          #'max_sep': 125,
          #'min_sep': 2.5,
-         'nbins': nbins_phys_mpc,
+         'nbins': nbins_phys_mpc - 2,
          'verbose': 0
         }
 
 # 3d metric
 config3 = {
-         'nbins': 31,
-         'max_sep': 200,
-         'min_sep': 5,
-         'min_rpar': -40,
-         'max_rpar': nbins_phys_mpc,
+         'nbins': nbins_phys_mpc,
+         'min_sep': Rmin_phys_mpc,
+         'max_sep': Rmax_phys_mpc,
+         'min_rpar': -100,
+         'max_rpar': 100,
          'verbose': 0
         }

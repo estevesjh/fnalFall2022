@@ -51,8 +51,8 @@ random['FKPWeight'] = 1.0 / (1 + random['NZ'] * 1e4)
 
 # do box separation
 # bins
-lbd_bins = np.array([5, 10, 14, 20, 30, 45, 60, 160])
-# lbd_bins = np.array([5, 15, 25, 40, 160])
+# lbd_bins = np.array([5, 10, 14, 20, 30, 45, 60, 160])
+lbd_bins = np.array([5, 10, 14, 35, 130])
 lbd_min = lbd_bins[:-1]
 lbd_max = lbd_bins[1:]
 

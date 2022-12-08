@@ -27,8 +27,8 @@ conv_factor = {"radians": 1.,
                "arcsec" : 360.*rad2deg}
 
 h = cosmo.H(0).value/100.
-zgrid = np.linspace(0., 1., 100)
-rcomov = cosmo.comoving_distance(np.array(zgrid)).value/h
+zgrid = np.linspace(0., 1., 1000)
+rcomov = cosmo.comoving_distance(zgrid).value
 get_rcomov = interp1d(zgrid, rcomov)
 
 # Setup file loc
@@ -51,14 +51,16 @@ def load_mock(nsize=14, n_patches=20, is_3d=False):
     for i in range(nsize):
         fname1 = fname_base%('data', i)
         fname2 = fname_base%('rnd', i)
-        
+        fname = fname_out%('kmeans%i'%n_patches,i)
+
         data = Table(getdata(fname1))
         rnd = Table(getdata(fname2))
 
         cut = np.random.randint(len(rnd), size=int(alpha*len(data)))
         rnd = rnd[cut]
-
+        
         if is_3d:
+            fname = fname_out%('kmeans%i_3d'%n_patches,i)
             data['rcomov'] = get_rcomov(np.array(data['z']))
             rnd['rcomov'] = get_rcomov(np.array(rnd['z']))
             
@@ -76,7 +78,7 @@ def load_mock(nsize=14, n_patches=20, is_3d=False):
         ij = np.argmin(np.abs(zmeans-np.mean(data['z'])))
 
         datas.append([c1, c2])
-        outfiles.append(fname_out%('kmeans%i'%n_patches,i))
+        outfiles.append(fname)
         zvalues.append(np.mean(zmeans[ij]))
 
     return datas, outfiles, zvalues
