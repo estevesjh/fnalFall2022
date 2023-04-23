@@ -1,0 +1,10 @@
+
+{
+ "argv": [
+  "/global/u1/e/eabdelaz/.local/share/jupyter/kernels/myenv-jupyter/jupyter-helper_cosmosis.sh",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "myenv-jupyter",
+ "language": "python"
+}
